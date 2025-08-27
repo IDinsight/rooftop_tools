@@ -21,3 +21,22 @@ repos:
     - id: isort
       name: isort (pyi)
       types: [pyi]
+repos:
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+        files: \.ipynb$
+        args:
+          # Keep cell metadata needed by tools; tweak as you like
+          - --extra-keys
+          - "metadata.kernelspec metadata.language_info"
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.9.0
+    hooks:
+      - id: nbqa-black
+        additional_dependencies: [black==24.8.0]
+        files: \.ipynb$
+      - id: nbqa-isort
+        additional_dependencies: [isort==5.13.2]
+        files: \.ipynb$
