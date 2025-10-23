@@ -1,9 +1,10 @@
 """Rooftop data processing operations."""
 
-from .matching import get_matched_rooftop_centroids_from_s2_file
+from .matching import match_all_rooftops_to_psus, match_s2_rooftops_to_psus
 from .sampling import sample_rooftops
 
 __all__ = [
-    "get_matched_rooftop_centroids_from_s2_file",
+    "match_s2_rooftops_to_psus",
+    "match_all_rooftops_to_psus",
     "sample_rooftops",
 ]
