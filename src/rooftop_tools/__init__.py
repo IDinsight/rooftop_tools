@@ -1,6 +1,6 @@
 """Rooftop tools for geospatial analysis and sampling."""
 
-from . import roads, rooftops, s2
+from . import points, merging, s2
 from .visualization import generate_colormap
 
 __all__ = [
