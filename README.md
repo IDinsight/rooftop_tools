@@ -15,12 +15,12 @@ The typical workflow for implementing rooftop sampling in a new country involves
 ## Data preparation
 
 1. **Obtain or create a dataset of PSUs with borders and population totals** - In order to conduct rooftop sampling, we first need a dataset of PSUs with data on borders and population totals. Obtaining or creating this dataset is typically the most time intensive part of rooftop sampling since it often involves a lot of tedious data cleaning. Fortunately, this is a one time step for each country and we have already compiled cleaned datasets for two countries (India and the Philippines).
-2. **Download rooftop data**  - Rooftop data can be downloaded from the [Google-Microsoft Open Buildings dataset](https://source.coop/repositories/vida/google-microsoft-open-buildings/description). In most cases, it makes sense to download all of the rooftop data for a country in one go. For a few of the most populated countries (India and Indonesia in particular) the rooftop data is too large to download at once (without waiting hours).
-3. **Merge PSU information into rooftop data** - Next, we merge the rooftop and PSU datasets using a "spatial join" so that each rooftop is assigned a single PSU.  
+2. **Download rooftop data**  - Rooftop data can be downloaded from the [Google-Microsoft Open Buildings dataset](https://source.coop/repositories/vida/google-microsoft-open-buildings/description). In most cases, it makes sense to download all of the rooftop data for a country in one go. For a few of the most populated countries (India and Indonesia in particular) the rooftop data is too large to download at once (without waiting hours) and thus it may make sense to only download rooftop data for sampled PSUs.
+3. **Merge PSU information into rooftop data** - Next, we merge the rooftop and PSU datasets using a "spatial join" so that each rooftop is assigned a single PSU.  (Note that you can also perform this step after sampling PSUs. This may be a good idea if merging takes a long time or if you anticipate only doing a single survey in the country.)
 
 ## Sampling
 
-4. **Sample PSUs** - Using the PSU dataset, we randomly sample a set of PSUs using probability proportional to sample size (PPS) sampling. This step should be completed in Stata or R since, to our knowledge, python lacks a package to accurately perform PPS sampling.
+4. **Sample PSUs** - Using the PSU dataset, we randomly sample a set of PSUs using probability proportional to sample size (PPS) sampling. This step should be completed in Stata or R since the pandas function to perform PPS sampling does not work as intended. (Though this may have been fixed. See [here](https://github.com/pandas-dev/pandas/issues/61516#issuecomment-2923288498).)
 5. **Sample rooftops and save outputs** - Using the sampled PSUs, we randomly select a fixed number of rooftops using the rooftop dataset with PSU information created in step 3 of data preparation. 
 6. **Create Google myMaps map using outputs** - Unfortunately, there is still a tiny bit of manual processing to create the Google myMaps map that should be shared with surveyors. We describe the steps to do this below.
 
