@@ -1,9 +1,4 @@
 
-# Delete unnecessary functions
-1. Not sure if we need rooftops.sampling or visualization.py. If not, delete them.
-2. Go through example notebooks in pin_drop_sampling2 and update the matching functions. 
-3. Go through pyproject.toml and check if I should drop any dependencies
-
 # Make sure this can be installed from github as a function
 1. check how the google map API thing would need to be called. 
 

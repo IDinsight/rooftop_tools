@@ -1,5 +1,6 @@
 """Snapping points to roads using the Google Roads API."""
 
+import os
 from concurrent.futures import ThreadPoolExecutor
 
 import geopandas as gpd
@@ -9,7 +10,7 @@ from tqdm.notebook import tqdm
 
 
 def get_nearest_points_on_road_api_call(
-    points: list[Point], api_key: str
+    points: list[Point], api_key: str | None = None
 ) -> list[Point | None]:
     """
     Retrieves the nearest points on the road for a list of points using the Google Roads API.
@@ -17,11 +18,24 @@ def get_nearest_points_on_road_api_call(
 
     Args:
         points (list[Point]): The points for which to find the nearest point on the road.
-        api_key (str): Your Google Roads API key.
+        api_key (str | None): Your Google Roads API key. If None, reads from
+            GOOGLE_MAPS_API_KEY environment variable.
 
     Returns:
         list[Point | None]: List of snapped points (None if not found).
+
+    Raises:
+        ValueError: If API key is not provided and not found in environment.
     """
+    # Get API key from environment if not provided
+    if api_key is None:
+        api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+        if api_key is None:
+            raise ValueError(
+                "API key must be provided either as a parameter or via "
+                "GOOGLE_MAPS_API_KEY environment variable"
+            )
+
     # checks
     if len(points) > 100:
         raise ValueError(
@@ -63,20 +77,31 @@ def _get_nearest_points_on_road_api_call_helper(args):
 
 
 def get_nearest_points_on_road(
-    gdf: gpd.GeoDataFrame, api_key: str, max_workers: int = 12
+    gdf: gpd.GeoDataFrame, api_key: str | None = None, max_workers: int = 12
 ) -> gpd.GeoSeries:
     """
     Snap all points in a GeoDataFrame to the nearest road using parallel processing and batching.
 
     Args:
         gdf: GeoDataFrame containing point geometries
-        api_key: Google Roads API key
+        api_key: Google Roads API key. If None, reads from GOOGLE_MAPS_API_KEY environment variable.
         max_workers: Number of parallel workers
 
     Returns:
         GeoSeries with snapped geometries (order matches input). NOTE: If any point could not be snapped,
         the corresponding entry will be None.
+
+    Raises:
+        ValueError: If API key is not provided and not found in environment.
     """
+    # Get API key from environment if not provided
+    if api_key is None:
+        api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+        if api_key is None:
+            raise ValueError(
+                "API key must be provided either as a parameter or via "
+                "GOOGLE_MAPS_API_KEY environment variable"
+            )
 
     # Ensure the GeoDataFrame contains only Point geometries
     if not all(gdf.geometry.type == "Point"):
