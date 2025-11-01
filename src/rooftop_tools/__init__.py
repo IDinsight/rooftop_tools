@@ -3,6 +3,7 @@
 from . import points, merging, s2
 from .points import (
     gen_map_link,
+    gen_directions_link,
     get_nearest_points_on_road,
     get_nearest_points_on_road_api_call,
 )
@@ -25,6 +26,7 @@ __all__ = [
     "s2",
     "generate_colormap",
     "gen_map_link",
+    "gen_directions_link",
     "get_nearest_points_on_road",
     "get_nearest_points_on_road_api_call",
     "match_all_rooftops_to_psus",

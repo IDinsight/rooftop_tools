@@ -133,3 +133,6 @@ dmypy.json
 
 # temp output files
 output/
+
+# quick debugging stuff
+scripts/

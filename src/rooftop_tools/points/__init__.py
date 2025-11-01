@@ -6,10 +6,12 @@ from .snapping import (
 )
 
 from .links import (
-    gen_map_link
+    gen_map_link,
+    gen_directions_link,
 )
 __all__ = [
     "get_nearest_points_on_road",
     "get_nearest_points_on_road_api_call",
     "gen_map_link",
+    "gen_directions_link",
 ]
